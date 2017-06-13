@@ -409,7 +409,11 @@ case "$os" in
 
 	# Install package
 	update_cmd="yum ${assume_yes} makecache"
-	install_cmd="yum ${assume_yes} install"
+	if [[ "$(grep -w nginx /etc/yum.conf)" ]]; then
+  	    install_cmd="yum ${assume_yes} install --disableexcludes=main"
+	else
+  	    install_cmd="yum ${assume_yes} install"
+	fi
 
 	install_deb_or_rpm
 	;;
